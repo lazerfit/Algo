@@ -1,11 +1,15 @@
-S = input()
-check = [-1]*26
- 
-for i in range(len(S)):
-    if check[ord(S[i])-97] != -1:
-        continue
+a = list(input())
+converted_a = []
+alphabets = []
+
+for i in a:
+    converted_a.append(ord(i) - 96)
+
+for i in range(1, 27):
+    alphabets.append(i)
+
+for alphabet in alphabets:
+    if alphabet in converted_a:
+        print(converted_a.index(alphabet), end=" ")
     else:
-        check[ord(S[i])-97] = i
-        
-for i in range(26):
-    print(check[i], end=' ')
+        print(-1, end=" ")
