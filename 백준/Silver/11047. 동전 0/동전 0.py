@@ -1,12 +1,10 @@
 N, K = map(int, input().split())
-coin = []
+coins = [int(input()) for _ in range(N)]
+coins.reverse()
 result = 0
-for _ in range(N):
-    coin.append(int(input()))
 
-for i in range(len(coin) - 1, -1, -1):
-    if K // coin[i] != 0:
-        result += K // coin[i]
-        K = K % coin[i]
+for coin in coins:
+    result+=K//coin
+    K%=coin
 
 print(result)
