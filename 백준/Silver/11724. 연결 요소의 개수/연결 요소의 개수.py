@@ -1,35 +1,32 @@
 from collections import deque
 import sys
+sys.setrecursionlimit(10**6)
 
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
-dq = deque()
-edges = [[] for _ in range(N + 1)]
 
-for _ in range(M):
-    v1, v2 = map(int, input().split())
-    edges[v1].append(v2)
-    edges[v2].append(v1)
-
+v = [[] for _ in range(N + 1)]
 visited = [False for _ in range(N + 1)]
 
+for i in range(M):
+    v1, v2 = map(int, input().split())
+    v[v1].append(v2)
+    v[v2].append(v1)
 
-def bfs(start):
-    dq.append(start)
+
+def dsf(start):
     visited[start] = True
-    while dq:
-        vertex = dq.popleft()
-        for val in edges[vertex]:
-            if not visited[val]:
-                visited[val] = True
-                dq.append(val)
+    s = v[start]
+    for elem in s:
+        if not visited[elem]:
+            dsf(elem)
 
 
 count = 0
-for k in range(1, N + 1):
-    if not visited[k]:
-        bfs(k)
+for i in range(1, N + 1):
+    if not visited[i]:
+        dsf(i)
         count += 1
 
 print(count)
