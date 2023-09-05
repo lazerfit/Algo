@@ -4,34 +4,24 @@ import sys
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
-edges = []
 dq = deque()
+edges = [[] for _ in range(N + 1)]
+
 for _ in range(M):
-    temp = tuple(map(int, input().split()))
-    edges.append(temp)
+    v1, v2 = map(int, input().split())
+    edges[v1].append(v2)
+    edges[v2].append(v1)
 
-adj = {}
-for i in range(1, N + 1):
-    adj[i] = []
-
-for edge in edges:
-    vertex1 = edge[0]
-    vertex2 = edge[1]
-    adj[vertex1].append(vertex2)
-    adj[vertex2].append(vertex1)
-
-visited = {i: False for i in range(1, N + 1)}
+visited = [False for _ in range(N + 1)]
 
 
 def bfs(start):
     dq.append(start)
-    result = []
     visited[start] = True
     while dq:
         vertex = dq.popleft()
-        result.append(vertex)
-        for val in adj[vertex]:
-            if visited[val] == False:
+        for val in edges[vertex]:
+            if not visited[val]:
                 visited[val] = True
                 dq.append(val)
 
