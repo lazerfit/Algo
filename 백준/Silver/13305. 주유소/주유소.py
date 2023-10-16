@@ -10,7 +10,7 @@ gas = list(map(int, input().split()))
 
 res = 0
 i = 0
-min_gas = 10001
+min_gas = 1_000_000_001
 while i < len(town):
     if gas[i] < min_gas:
         min_gas = gas[i]
