@@ -1,34 +1,36 @@
 import java.util.*;
 class Solution {
-    static boolean[] width;
-    static boolean[] diagonal1;
-    static boolean[] diagonal2;
-    static int N;
+    private static int[] width;
+    private static int answer;
+    private static int N;
+    private static void back(int y) {
+        if (y == N)
+            answer++;
+        
+        else {
+            for (int i=0;i<N;i++) {
+                width[y] = i;
+                if(valid(y)) {
+                    back(y + 1);
+                }
+            }
+        }
+    }
     
-    static int getAns(int y) {
-        int ans = 0;
-        if (y == N) {
-            ans++;
+    private static boolean valid(int y) {
+        for (int i =0;i<y;i++) {
+            if (width[y] == width[i]) return false;
+            if (Math.abs(y - i) == Math.abs(width[y] - width[i])) return false;
         }
         
-        for (int i=0;i<N;i++) {
-            if (width[i] || diagonal1[i + y] || diagonal2[i - y + N])
-                continue;
-            
-            width[i] = diagonal1[i + y] = diagonal2[i - y + N] = true;
-            ans += getAns(y + 1);
-            width[i] = diagonal1[i + y] = diagonal2[i - y + N] = false;
-        }
-        
-        return ans;
+        return true;
     }
     
     public int solution(int n) {
+        answer = 0;
         N = n;
-        width = new boolean[n];
-        diagonal1 = new boolean[n * 2];
-        diagonal2 = new boolean[n * 2];
-        
-        return getAns(0);
+        width = new int[n];
+        back(0);
+        return answer;
     }
 }
